@@ -17,5 +17,5 @@ def present():
     results = search.get_dict()
     images_results = results["images_results"]
     
-    return images_results[0]['link']
+    return images_results[0]['original']
     
