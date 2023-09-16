@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from serpapi import GoogleSearch
 import cohere
 from flask_cors import CORS, cross_origin
@@ -9,7 +9,11 @@ COHERE_API_KEY = "OkdezIHQB1oWjY7pziAjufhf3oHXsdiPgTnb8puW"
 
 
 def speechblob_to_gcloud():
-    pass
+    blob = request.data
+    print(blob)
+
+    return jsonify({"hello": "world"})
+
 
 def summarize():
     # Cohere
@@ -37,28 +41,12 @@ def summarize():
 @cross_origin()
 def image_search():
 
-    # Cohere
-    co = cohere.Client(COHERE_API_KEY)
-    
     # SerpAPI endpoint
     # Searches with query and returns first google image result
     image_query = request.args.get("image_query")
-    
-    # Filter image query to 3 words max using cohere
-    query = co.summarize(
-        text = image_query,
-        length = 'short',
-        format = 'auto',
-        model = 'command-nightly',
-        additional_command = 'only give me three words divided by a comma',
-        temperature = 0.3,                                                                                                          
-    )
-    
-    print("query")
-    print(query)
 
     params = {
-        "q": query[1],
+        "q": image_query,
         "engine": "google_images",
         "ijn": "0",
         "api_key": SERP_API_KEY

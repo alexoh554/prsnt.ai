@@ -2,6 +2,15 @@ import React from "react";
 import "./index.css";
 import SLIDE1 from "./slide templates/slide 1";
 import { ReactMic } from "react-mic";
+
+async function speechblob_to_gcloud(recordedBlob) {
+  let response = await fetch("http://localhost:5000/speechblob_to_gcloud", {
+    method: "POST",
+    body: recordedBlob,
+  });
+  //response = await response.json();
+}
+
 export default class SLIDE_MANAGER extends React.Component {
   state = {
     record: false,
@@ -17,6 +26,7 @@ export default class SLIDE_MANAGER extends React.Component {
 
   onData(recordedBlob) {
     console.log("chunk of real-time data is: ", recordedBlob);
+    speechblob_to_gcloud(recordedBlob);
   }
 
   onStop(recordedBlob) {
@@ -30,6 +40,8 @@ export default class SLIDE_MANAGER extends React.Component {
           record={this.state.record}
           onStop={this.onStop}
           onData={this.onData}
+          mimeType="audio/webm"
+          timeSlice={20000}
         />
         <button onClick={this.startRecording} type="button">
           Start
