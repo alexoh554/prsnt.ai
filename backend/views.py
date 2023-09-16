@@ -14,7 +14,6 @@ def speechblob_to_gcloud():
 
     return jsonify({"hello": "world"})
 
-
 def summarize():
     # Cohere
     co = cohere.Client(COHERE_API_KEY)
@@ -32,9 +31,12 @@ def summarize():
         temperature=0.4,
     )
 
+    bullet_points = response[1].split('\n')
+
     return jsonify({
-        "summary": response[1]
+        "summary": bullet_points
     })
+
 
 
 # Presentation page
