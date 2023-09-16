@@ -1,35 +1,37 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 function Image(props) {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
 
+  async function image_search() {
+    let response = await fetch(
+      "http://localhost:5000/image_search?image_query=" + props.query
+    );
+    response = await response.json();
+
+    if ("image" in response) {
+      setData({ image: response.image });
+    }
+  }
   useEffect(() => {
-    params = URLSearchParams([["image_query", props.query]]);
-    axios
-      .get("http://127.0.0.1:5000/image_search")
-      .then((response) => {
-        const res = response.data;
-        setData({
-          image: res.image,
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
+    if ("image" in data && data.image != null) {
+      return;
+    } else {
+      image_search();
+    }
   });
-
-  return (
-    <>
+  let image_div;
+  if ("image" in data) {
+    image_div = (
       <div className="image-container">
-        {data && data.image && <img src={data.image} alt="Image" id="image" />}
+        {<img src={data.image} alt="Image" id="image" />}
       </div>
-    </>
-  );
+    );
+  } else {
+    image_div = "no_image";
+  }
+
+  return image_div;
 }
 
 export default Image;
