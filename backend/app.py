@@ -5,14 +5,12 @@ import views
 
 app = Flask(__name__)
 
-CORS(app)
+cors = CORS(app, resources={"/*": {"origins": "*"}})
 
-@app.route('/')
-def home():
-    title = "homepage"
-    return jsonify({"title": title})
 
-app.add_url_rule('/present', view_func=views.present)
+app.add_url_rule('/image_search', view_func=views.image_search)
+
+app.add_url_rule('/summarize', view_func=views.summarize)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
