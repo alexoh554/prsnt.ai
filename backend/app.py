@@ -10,7 +10,7 @@ CORS(app)
 
 app.add_url_rule('/image_search', view_func=views.image_search)
 
-app.add_url_rule('/cohere', view_func=views.cohere)
+app.add_url_rule('/summarize', view_func=views.summarize)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
