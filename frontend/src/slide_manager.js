@@ -1,6 +1,8 @@
 import React from "react";
 import "./index.css";
-import SLIDE1 from "./slide templates/slide 1";
+import Slide1 from "./slide_templates/slide1";
+import Slide2 from "./slide_templates/slide2";
+import Slide3 from "./slide_templates/slide3";
 import { ReactMic } from "react-mic";
 
 async function speechblob_to_gcloud(recordedBlob) {
@@ -12,9 +14,18 @@ async function speechblob_to_gcloud(recordedBlob) {
 }
 
 export default class SLIDE_MANAGER extends React.Component {
-  state = {
-    record: false,
-  };
+  constructor(props) {
+    super(props);
+    
+    this.slides = [Slide1, Slide2, Slide3];
+    this.state = {
+      slide_index: 0,
+      record: false,
+    };
+
+    this.switchSlide = this.switchSlide.bind(this);
+  }
+
 
   startRecording = () => {
     this.setState({ record: true });
@@ -32,10 +43,20 @@ export default class SLIDE_MANAGER extends React.Component {
   onStop(recordedBlob) {
     console.log("recordedBlob is: ", recordedBlob);
   }
+
+  switchSlide() {
+    this.setState((prevState) => {
+      const nextIndex = (prevState.slide_index + 1) % 3; 
+      return { slide_index: nextIndex };
+    });
+  }
+
   render() {
+    const CurrentSlide = this.slides[this.state.slide_index];
+
     return (
       <div className="border_constraints">
-        <SLIDE1 />
+        <CurrentSlide />
         <ReactMic
           record={this.state.record}
           onStop={this.onStop}
@@ -48,6 +69,9 @@ export default class SLIDE_MANAGER extends React.Component {
         </button>
         <button onClick={this.stopRecording} type="button">
           Stop
+        </button>
+        <button onClick={this.switchSlide} type="button">
+          Switch Slide
         </button>
       </div>
     );
