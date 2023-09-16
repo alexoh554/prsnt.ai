@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from serpapi import GoogleSearch
 import cohere
+from flask_cors import CORS, cross_origin
 
 
 SERP_API_KEY = "a240d146c529bc7e3c401e6ca82121c8b10f23be53d4b62537338bfbe7a11085"
@@ -38,6 +39,7 @@ def cohere():
 
 
 # Presentation page
+@cross_origin()
 def image_search():
 
     #request.args = {image_query}

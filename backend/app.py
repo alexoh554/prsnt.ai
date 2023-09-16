@@ -5,7 +5,7 @@ import views
 
 app = Flask(__name__)
 
-CORS(app)
+cors = CORS(app, resources={"/*": {"origins": "*"}})
 
 
 app.add_url_rule('/image_search', view_func=views.image_search)
