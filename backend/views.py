@@ -7,6 +7,10 @@ SERP_API_KEY = "a240d146c529bc7e3c401e6ca82121c8b10f23be53d4b62537338bfbe7a11085
 COHERE_API_KEY = "OkdezIHQB1oWjY7pziAjufhf3oHXsdiPgTnb8puW"
 
 
+def speechblob_to_gcloud():
+    pass
+
+
 def cohere():
     # Cohere
     co = cohere.Client(COHERE_API_KEY)

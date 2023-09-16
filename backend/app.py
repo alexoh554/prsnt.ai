@@ -10,6 +10,8 @@ CORS(app)
 
 app.add_url_rule('/image_search', view_func=views.image_search)
 
+app.add_url_rule('/cohere_summarize', view_func=views.cohere)
+
 app.add_url_rule('/cohere', view_func=views.cohere)
 
 if __name__ == '__main__':
