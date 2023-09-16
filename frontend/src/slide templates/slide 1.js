@@ -3,6 +3,9 @@ import "./slide1.css";
 
 export default class SLIDE1 extends React.Component {
   render() {
-    return "slide 1";
+    return;
+
+    {
+    }
   }
 }
