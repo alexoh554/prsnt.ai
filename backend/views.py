@@ -27,9 +27,6 @@ def summarize():
         temperature=0.4,
     )
 
-    # Get the summary from the response
-    print(response)
-
     return jsonify({
         "summary": response[1]
     })
@@ -38,14 +35,28 @@ def summarize():
 # Presentation page
 def image_search():
 
-    #request.args = {image_query}
-
+    # Cohere
+    co = cohere.Client(COHERE_API_KEY)
+    
     # SerpAPI endpoint
     # Searches with query and returns first google image result
     image_query = request.args.get("image_query")
+    
+    # Filter image query to 3 words max using cohere
+    query = co.summarize(
+        text = image_query,
+        length = 'short',
+        format = 'auto',
+        model = 'command-nightly',
+        additional_command = 'only give me three words divided by a comma',
+        temperature = 0.3,                                                                                                          
+    )
+    
+    print("query")
+    print(query)
 
     params = {
-        "q": image_query,
+        "q": query[1],
         "engine": "google_images",
         "ijn": "0",
         "api_key": SERP_API_KEY
