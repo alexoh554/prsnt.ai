@@ -10,17 +10,16 @@ COHERE_API_KEY = "OkdezIHQB1oWjY7pziAjufhf3oHXsdiPgTnb8puW"
 def speechblob_to_gcloud():
     pass
 
-
-def cohere():
+def summarize():
     # Cohere
     co = cohere.Client(COHERE_API_KEY)
 
     # Get the text
-    text = "The blue whale (Balaenoptera musculus) is a marine mammal and a baleen whale. Reaching a maximum confirmed length of 29.9 meters (98 ft) and weighing up to 199 tonnes (196 long tons; 219 short tons), it is the largest animal known ever to have existed.[a]"
+    cohere_query = request.args.get("cohere_query")
 
     # Use Cohere to summarize the text
     response = co.summarize(
-        text=text,
+        text=cohere_query,
         length='medium',
         format='bullets',
         model='summarize-xlarge',
@@ -33,7 +32,6 @@ def cohere():
 
     return jsonify({
         "summary": response[1]
-
     })
 
 
@@ -59,5 +57,4 @@ def image_search():
 
     return jsonify({
         "image": images_results[0]['original'],
-
     })
