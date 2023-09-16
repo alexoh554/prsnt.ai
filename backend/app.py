@@ -1,8 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_cors import CORS
 
-api = Flask(__name__)
+app = Flask(__name__)
+CORS(app)
 
-@api.route('/')
+@app.route('/')
 def home():
-    homepage = "homepage"
-    return homepage
+    title = "homepage"
+    return jsonify({"title": title})
